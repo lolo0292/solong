@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:01:10 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/10 15:20:43 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:56:15 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 #include <strings.h>
 #include <unistd.h>
 #include <fcntl.h>
+// #include "mlx.h"
+#include "mlx.h"
+
 
 typedef struct s_map {
     char **grid;      // Tableau 2D contenant la carte
@@ -44,5 +47,25 @@ typedef struct s_game
     int     tex_height;  // Hauteur des textures
     int     moves;       // Nombre de déplacements du joueur
 }   t_game;
+
+void	free_map(t_map *map);
+void	free_textures(t_game *game);
+void	free_game(t_game *game);
+int	close_game(t_game *game);
+void	is_map_enclosed(t_map *map);
+void	count_elements(t_map *map, int *player, int *ex, int *collectibles);
+void	has_required_elements(t_map *map);
+void	check_map_validity(t_map *map);
+void	map_dim(char *filename, t_map *map);
+void	map_load(char *filename, t_map *map);
+void	parse_map(char *filename, t_map *map);
+int	can_move(t_game *game, int new_x, int new_y);
+void	move_player(t_game *game, int dx, int dy);
+int	handle_keypress(int keycode, t_game *game);
+void	load_textures(t_game *game);
+void	put_image(t_game *game, int x, int y, char tile);
+void	render_map(t_game *game);
+void	display_moves(t_game *game);
+
 
 #endif

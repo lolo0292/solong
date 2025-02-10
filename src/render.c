@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:18:15 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/10 16:08:28 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:16:06 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,19 @@ void	render_map(t_game *game)
 		y++;
 	}
 }
+
+void	display_moves(t_game *game)
+{
+	char	*moves_str;
+	char	*msg;
+
+	moves_str = ft_itoa(game->moves); // Convertit le nombre en string
+	msg = ft_strjoin("Déplacements : ", moves_str); // Crée le message
+	mlx_string_put(game->mlx, game->win, 10, 10, 0xFFFFFF, msg); // Affiche dans la fenêtre
+	free(moves_str);
+	free(msg);
+}
+
 // void	load_textures(t_game *game)
 // {
 // 	game->textures[0] = mlx_xpm_file_to_image(game->mlx, "sprites/wall.xpm",

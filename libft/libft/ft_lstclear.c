@@ -1,14 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 16:08:46 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/10 16:09:12 by lleichtn         ###   ########.fr       */
+/*   Created: 2024/12/26 19:07:51 by nsiefert          #+#    #+#             */
+/*   Updated: 2024/12/26 19:07:52 by nsiefert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "libft.h"
 
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*tempo;
+
+	while (*lst)
+	{
+		tempo = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		(*lst) = tempo;
+	}
+}
