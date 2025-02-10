@@ -1,0 +1,160 @@
+### **🚀 Plan détaillé des prochaines étapes pour finaliser "So Long"**
+Maintenant que **MiniLibX est installé et fonctionnel**, on peut avancer **par étapes bien définies** pour coder ton jeu **So Long** proprement.
+
+---
+
+# **📝 Plan détaillé des étapes restantes**
+## **📌 Étape 1 : Gestion de la carte (Parsing & Vérifications)**
+👉 **Objectif** : Lire une carte `.ber` et s’assurer qu’elle est **valide**.
+
+🔹 **Fichiers concernés** :
+- `map.c`
+- `map_utils.c`
+
+🔹 **Ce qu'on va faire** :
+✅ Lire le fichier `.ber` et stocker la carte dans une structure.  
+✅ Vérifier que la carte respecte ces règles :
+   - **Entourée de murs** (`1` en bordure).
+   - **Contient** un **joueur (P)**, une **sortie (E)**, et au moins un **collectible (C)**.
+   - **Carte rectangulaire**.
+   - **Un chemin jouable doit exister**.
+
+🔹 **Plan d'action :**
+1. **Lire le fichier `.ber`** et stocker son contenu dans un tableau (`char **grid`).
+2. **Vérifier la validité de la carte** (présence des éléments, murs autour...).
+3. **Utiliser un algorithme `flood-fill`** pour s'assurer que la carte est jouable.
+
+---
+
+## **📌 Étape 2 : Initialisation du jeu**
+👉 **Objectif** : Charger la carte en mémoire et **afficher une première fenêtre** avec MiniLibX.
+
+🔹 **Fichiers concernés** :
+- `main.c`
+- `game.c`
+- `render.c`
+
+🔹 **Ce qu'on va faire** :
+✅ Ouvrir une **fenêtre MiniLibX** (dimensions selon la carte).  
+✅ **Charger et afficher la carte** sous forme de sprites (murs, sol, joueur...).  
+
+🔹 **Plan d'action :**
+1. **Initialiser MiniLibX (`mlx_init()`) et créer une fenêtre (`mlx_new_window()`)**.
+2. **Charger les textures** (murs, sol, joueur, collectibles...).
+3. **Afficher la carte** en fonction du contenu du fichier `.ber`.
+
+---
+
+## **📌 Étape 3 : Gestion des déplacements**
+👉 **Objectif** : Déplacer le joueur **avec les touches WASD** et mettre à jour l'affichage.
+
+🔹 **Fichiers concernés** :
+- `player.c`
+- `events.c`
+- `game.c`
+
+🔹 **Ce qu'on va faire** :
+✅ Gérer les **touches clavier (`WASD`)** pour déplacer le joueur.  
+✅ **Empêcher le joueur de passer à travers les murs**.  
+✅ **Compter les déplacements** et les afficher dans le terminal.  
+✅ **Vérifier si tous les collectibles sont récupérés** avant d’autoriser la sortie.
+
+🔹 **Plan d'action :**
+1. **Ajouter un event listener sur les touches (`mlx_key_hook()`)**.
+2. **Mettre à jour la position du joueur en fonction de la touche pressée**.
+3. **Vérifier si le joueur marche sur un collectible (`C`)** et le ramasser.
+4. **Si tous les collectibles sont ramassés, autoriser la sortie (`E`)**.
+
+---
+
+## **📌 Étape 4 : Gestion des événements (Quitter proprement)**
+👉 **Objectif** : Fermer proprement le jeu quand le joueur **appuie sur ESC** ou **ferme la fenêtre**.
+
+🔹 **Fichiers concernés** :
+- `events.c`
+- `free.c`
+
+🔹 **Ce qu'on va faire** :
+✅ Fermer proprement avec `ESC` (`mlx_destroy_window()`).  
+✅ Fermer en cliquant sur la croix de la fenêtre.  
+✅ Libérer toute la mémoire (`free()` pour la carte, textures...).
+
+🔹 **Plan d'action :**
+1. **Associer la touche `ESC` à `mlx_key_hook()` pour quitter**.
+2. **Gérer la fermeture avec la croix (`mlx_hook()`)**.
+3. **Créer une fonction `free_game()`** pour libérer mémoire et fermer MiniLibX.
+
+---
+
+## **📌 Étape 5 : Vérification et correction des bugs**
+👉 **Objectif** : Tester le jeu avec **plusieurs cartes** et corriger les bugs.
+
+🔹 **Ce qu'on va faire** :
+✅ Tester avec différentes tailles de cartes `.ber`.  
+✅ Vérifier que le jeu **affiche bien une erreur** si la carte est invalide.  
+✅ Vérifier que **le joueur ne passe pas à travers les murs**.  
+✅ S’assurer que **la mémoire est bien libérée** (`valgrind`).
+
+🔹 **Plan d'action :**
+1. **Tester plusieurs cartes valides et invalides.**
+2. **Corriger les bugs détectés (ex: mauvais affichage, déplacement incorrect).**
+3. **Vérifier la mémoire avec `valgrind`** :
+   ```sh
+   valgrind --leak-check=full ./so_long maps/test.ber
+   ```
+
+---
+
+## **📌 Étape 6 : Rendu final et push sur Git**
+👉 **Objectif** : Finaliser et rendre le projet.
+
+🔹 **Ce qu'on va faire** :
+✅ S'assurer que **tout respecte les règles** du sujet (norme, Makefile, fichiers propres).  
+✅ **Vérifier le Makefile** pour qu'il compile bien sans relink.  
+✅ **Faire un dernier test global** pour vérifier que tout marche.  
+✅ **Pousser le projet sur Git**.
+
+🔹 **Plan d'action :**
+1. **Vérifier que tout compile bien :**
+   ```sh
+   make re
+   ```
+2. **S’assurer que le Makefile ne relink pas.**
+3. **Vérifier avec `norminette` que le code respecte la norme 42** :
+   ```sh
+   norminette */*.c */*.h
+   ```
+4. **Ajouter et commit sur Git :**
+   ```sh
+   git add .
+   git commit -m "Final version of so_long"
+   git push origin main
+   ```
+
+---
+
+# **🎯 Récapitulatif du plan global**
+| Étape | Objectif | Fichiers |
+|-------|----------|---------|
+| **1** | Lire et vérifier la carte | `map.c`, `map_utils.c` |
+| **2** | Afficher la carte dans une fenêtre MiniLibX | `main.c`, `game.c`, `render.c` |
+| **3** | Gérer les déplacements du joueur | `player.c`, `events.c`, `game.c` |
+| **4** | Gérer les événements (fermeture propre) | `events.c`, `free.c` |
+| **5** | Tester, corriger les bugs | Tout le projet |
+| **6** | Finaliser et rendre sur Git | Makefile, vérifications norme |
+
+---
+
+# **📌 Que faire maintenant ?**
+Tu peux **commencer par l’étape 1** : **Lire et vérifier la carte**.
+
+✅ **Crée un fichier `.ber` de test dans `maps/`** (exemple) :
+```
+111111
+1P0C01
+100001
+1C0E01
+111111
+```
+✅ **Code `map.c` pour charger ce fichier et afficher son contenu.**  
+Si tu veux que je t’aide à coder cette partie, **dis-moi** ! 🚀
