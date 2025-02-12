@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:07:34 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:07:35 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/12 12:13:03 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+#include "../include/libft.h"
+// checks if it is printable
 int	ft_isprint(int c)
 {
 	if (c >= 32 && c <= 126)
-		return (c);
+		return (1);
 	return (0);
 }

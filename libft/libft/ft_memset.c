@@ -3,26 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:08:49 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:08:50 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/12 12:30:43 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+#include "../include/libft.h"
+// fill n first bytes of mem pointed by s for c
 void	*ft_memset(void *s, int c, size_t n)
 {
-	char	*str;
-	size_t	i;
+	size_t	x;
 
-	i = 0;
-	str = (char *)s;
-	while (i < n)
+	x = 0;
+	while (x < n)
 	{
-		str[i] = c;
-		i++;
+		*(unsigned char *)(s + x) = (unsigned char)c;
+		x++;
 	}
-	return (str);
+	return (s);
 }

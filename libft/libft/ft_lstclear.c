@@ -3,23 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:07:51 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:07:52 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/20 14:49:37 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+#include "../include/libft.h"
+//free and clear mem with del
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list	*tempo;
+	t_list	*tmp;
 
+	if (!lst || !del)
+		return ;
 	while (*lst)
 	{
-		tempo = (*lst)->next;
+		tmp = (*lst)->next;
 		ft_lstdelone(*lst, del);
-		(*lst) = tempo;
+		*lst = tmp;
 	}
+	*lst = NULL;
 }

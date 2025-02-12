@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:21:58 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/10 16:29:27 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:51:30 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	main(int argc, char **argv)
 	render_map(&game);               // Affiche la carte
 
 	// Ajoute les gestionnaires d'événements
-	mlx_key_hook(game.win, handle_keypress, &game); // Déplacements clavier
+	// mlx_key_hook(game.win, handle_keypress, &game); // Déplacements clavier
+	mlx_hook(game.win, 2, 1L << 0, handle_keypress, &game);
 	mlx_hook(game.win, 17, 0, close_game, &game);   // Fermeture avec la croix
 
 	mlx_loop(game.mlx);              // Lancement de la boucle MiniLibX

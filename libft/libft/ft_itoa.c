@@ -3,50 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:07:38 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:07:39 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/15 18:10:01 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-static size_t	ft_check_sign(char *str, long *nb)
+#include "../include/libft.h"
+static int	ft_strlena(int nb)
 {
-	if ((*nb) == 0)
-		str[0] = '0';
-	if ((*nb) < 0)
+	int		len;
+	long	n;
+
+	len = 0;
+	n = nb;
+	if (n < 0)
 	{
-		str[0] = '-';
-		*nb = -*nb;
+		len++;
+		n = -n;
+	}
+	if (n == 0)
 		return (1);
-	}
-	return (0);
-}
-
-char	*ft_itoa(int n)
-{
-	size_t		i;
-	size_t		modulus;
-	short int	rparodilpb;
-	char		str[13];
-	long		nb;
-
-	nb = n;
-	rparodilpb = 0;
-	modulus = 1000000000;
-	ft_bzero(str, 13);
-	i = ft_check_sign(str, &nb);
-	while (modulus != 0)
+	while (n > 0)
 	{
-		if (nb / modulus != 0 || rparodilpb != 0)
-		{
-			str[i++] = (nb / modulus) + 48;
-			rparodilpb++;
-		}
-		nb %= modulus;
-		modulus /= 10;
+		n = n / 10;
+		len++;
 	}
-	return (ft_strdup(str));
+	return (len);
 }
+
+// From integer to ascii
+char	*ft_itoa(int nb)
+{
+	char	*res;
+	long	n;
+	int		i;
+
+	n = nb;
+	i = ft_strlena(n);
+	res = malloc((ft_strlena(n) + 1) * sizeof(char));
+	if (!res)
+		return (NULL);
+	res[i] = '\0';
+	i--;
+	if (n < 0)
+	{
+		res[0] = '-';
+		n = -n;
+	}
+	if (n == 0)
+		res[0] = '0';
+	while (n > 0)
+	{
+		res[i] = n % 10 + '0';
+		n /= 10;
+		i--;
+	}
+	return (res);
+}
+
+// int main(void)
+// {
+//     char *tmp;
+//     tmp = ft_itoa(123456);
+//     printf("%s", tmp);
+//     free(tmp);
+//     return (0);
+// }

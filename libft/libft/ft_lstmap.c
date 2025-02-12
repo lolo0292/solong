@@ -3,35 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:08:12 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:08:13 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/20 20:36:45 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+#include "../include/libft.h"
+//bordel
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*tempo;
-	t_list	*tempo_content;
+	t_list	*nl;
+	t_list	*ne;
 
-	tempo_content = ft_lstnew(f(lst->content));
-	if (!tempo_content)
+	if (!lst || !f)
 		return (NULL);
-	tempo = tempo_content;
-	lst = lst->next;
+	nl = NULL;
 	while (lst)
 	{
-		tempo_content = ft_lstnew(f(lst->content));
-		if (!tempo_content)
+		ne = ft_lstnew(f(lst->content));
+		if (!ne)
 		{
-			ft_lstclear(&tempo, del);
+			ft_lstclear(&nl, del);
 			return (NULL);
 		}
-		ft_lstadd_back(&tempo, tempo_content);
+		ft_lstadd_back(&nl, ne);
 		lst = lst->next;
 	}
-	return (tempo);
+	return (nl);
 }

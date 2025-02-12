@@ -3,26 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:08:31 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:08:32 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/15 13:28:35 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+#include "../include/libft.h"
+// premier occurance de c dans la zone pointe par s ds les n premiers octets
 void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t	i;
-	char	*str;
 
 	i = 0;
-	str = (char *)s;
 	while (i < n)
 	{
-		if ((char)c == str[i])
-			return ((void *)str + i);
+		if (*(unsigned char *)(s + i) == (unsigned char)c)
+			return ((void *)(s + i));
 		i++;
 	}
 	return (NULL);

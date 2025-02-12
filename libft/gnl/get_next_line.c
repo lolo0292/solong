@@ -3,128 +3,170 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:05:49 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:05:52 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/12/11 13:51:51 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/12 12:44:59 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../include/get_next_line.h"
 
-static char	*ft_next(char **temp)
+char	*ft_strchr3(const char *s, int c)
+{
+	if (!s)
+		return (NULL);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
+
+char	*free2(char **ptr1, char **ptr2)
+{
+	if (ptr1 && *ptr1)
+	{
+		free(*ptr1);
+		*ptr1 = NULL;
+	}
+	if (ptr2 && *ptr2)
+	{
+		free(*ptr2);
+		*ptr2 = NULL;
+	}
+	return (NULL);
+}
+
+char	*store(int fd, char *stash)
+{
+	char	*buffer;
+	ssize_t	bytes_read;
+
+	buffer = ft_calloc3(BUFFER_SIZE + 1, sizeof(char));
+	if (!buffer)
+		return (NULL);
+	bytes_read = 1;
+	while (!ft_strchr3(stash, '\n') && bytes_read > 0)
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read < 0)
+			return (free2(&buffer, NULL));
+		buffer[bytes_read] = '\0';
+		stash = ft_strjoin3(stash, buffer);
+		if (!stash)
+			return (free2(&buffer, NULL));
+	}
+	free(buffer);
+	return (stash);
+}
+
+char	*getline1(char **stash)
 {
 	char	*line;
-	char	*ptr;
+	char	*temp;
+	size_t	len;
 
-	ptr = *temp;
-	while (*ptr && *ptr != '\n')
-		++ptr;
-	ptr += (*ptr == '\n');
-	line = ft_substr (*temp, 0, (size_t)(ptr - *temp));
+	if (*stash == NULL || **stash == '\0')
+		return (NULL);
+	if (ft_strchr3(*stash, '\n'))
+		len = ft_strchr3(*stash, '\n') - *stash + 1;
+	else
+		len = ft_strlen3(*stash);
+	line = ft_substr3(*stash, 0, len);
 	if (!line)
+		return (NULL);
+	temp = ft_substr3(*stash, len, ft_strlen3(*stash) - len);
+	if (!temp)
 	{
-		free (*temp);
+		free(line);
 		return (NULL);
 	}
-	ptr = ft_substr (ptr, 0, ft_strlen (ptr));
-	free (*temp);
-	*temp = ptr;
+	free(*stash);
+	*stash = temp;
 	return (line);
 }
 
-// Fonction qui permet de lire une ligne en entier en s'arretant a \0 et \n
-// la variable r me permet de stopper en cas de fin de fichier et strchr en cas
-// de \n .
-static char	*ft_read(char *temp, int fd, char *buf)
-{
-	ssize_t		r;
-
-	r = 1;
-	while (r && !ft_strchr (temp, '\n'))
-	{
-		r = read (fd, buf, BUFFER_SIZE);
-		if (r == -1)
-		{
-			free (buf);
-			free (temp);
-			return (NULL);
-		}
-		buf[r] = 0;
-		temp = ft_strjoin_free_s1 (temp, buf);
-		if (!temp)
-		{
-			free (buf);
-			return (NULL);
-		}
-	}
-	free (buf);
-	return (temp);
-}
-
-// Fonction qui permet de lire la ligne du fichier en la stockant dans une
-// ligne d'un double tableau pour permettre la lecture de plusieurs fichiers
-// en meme temps
 char	*get_next_line(int fd)
 {
-	static char	*temp[OPEN_MAX];
-	char		*buf;
+	static char	*stash;
+	char		*line;
 
-	if (fd == -1 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!temp[fd])
-		temp[fd] = ft_strdup("");
-	if (!temp[fd])
+	stash = store(fd, stash);
+	if (!stash)
 		return (NULL);
-	buf = malloc (sizeof (*buf) * (BUFFER_SIZE + 1));
-	if (!buf)
-	{
-		free (temp[fd]);
-		return (NULL);
-	}
-	temp[fd] = ft_read (temp[fd], fd, buf);
-	if (!temp[fd])
-		return (free(temp[fd]), NULL);
-	if (!*temp[fd])
-	{
-		free (temp[fd]);
-		temp[fd] = NULL;
-		return (NULL);
-	}
-	return (ft_next(&temp[fd]));
+	line = getline1(&stash);
+	if (!line)
+		free2(&stash, NULL);
+	return (line);
 }
 
-// #include <stdio.h>
-// int	main(int ac, char **av)
+// int	main(void)
 // {
-//	 int		fd;
-//	 int		fd2;
-//	 int		fd3;
-//	 char	*str;
-//	 char	*str2;
-//	 char	*str3;
+// 	const char	*texte = "\n\n\n\n\n\n\n";
+// 	int			pipefds[2];
+// 	char		*ligne;
 
-//	 fd = open(av[1], O_RDONLY);
-// 	printf ("fd du premier fichier : %d\n", fd);
-//	 fd2 = open(av[2], O_RDONLY);
-// 	printf ("fd du deuxieme fichier : %d\n", fd2);
-//	 fd3 = open(av[3], O_RDONLY);
-// 	printf ("fd du troisieme fichier : %d\n", fd3);
-//	 (void) ac;
-//	 str = get_next_line(fd);
-//	 str2 = get_next_line(fd2);
-//	 str3 = get_next_line(fd3);
-//	 while (str && str2 && str3)
-//	 {
-//		 printf("%s", str);
-//		 printf("%s", str2);
-//		 printf("%s", str3);
-//		 free(str);
-//		 free(str2);
-//		 free(str3);
-//		 str = get_next_line(fd);
-//		 str2 = get_next_line(fd2);
-//		 str3 = get_next_line(fd3);
-//	 }
-//	 return (0);
+// 	if (pipe(pipefds) == -1)
+// 	{
+// 		perror("Erreur lors de la création du pipe");
+// 		return (1);
+// 	}
+// 	write(pipefds[1], texte, strlen(texte));
+// 	close(pipefds[1]);
+//  printf("Lecture du texte ligne par ligne :\n");
+// 	while ((ligne = get_next_line(pipefds[0])) != NULL)
+// 	{
+// 		printf("%s", ligne);
+// 		free(ligne); // Libérer la mémoire allouée par get_next_line
+// 	}
+// 	close(pipefds[0]);
+// 	return (0);
+// }
+
+// int main(void)
+// {
+//     int fd;
+//     char *str;
+
+//     fd = open("test2.txt", O_RDONLY);
+//     if (fd < 0)
+//     {
+//         printf("%s", "Error\n");
+//         return (1);
+//     }
+//     while((str = get_next_line(fd)) != 0)
+//     {
+//         printf("%s/n", str);
+//         free(str);
+//     }   
+//     close(fd);
+//     return (0);
+// }
+
+// int main(void)
+// {
+//     int fd;
+//     char *str;
+
+//     fd = open("test2.txt", O_RDONLY);
+//     if (fd < 0)
+//     {
+//         printf("%s", "une erreur s'est produite dans l'ouverture du fichier");
+//         return (1);
+//     }
+//     str = get_next_line(fd);
+//     printf("%s", str);
+// 	free (str);
+// 	str = get_next_line(fd);
+// 	printf("%s", str);
+// 	free(str);
+//     close(fd);
+//     return (0);
 // }

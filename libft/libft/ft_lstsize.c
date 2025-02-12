@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:08:22 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:08:23 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/20 14:27:20 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_lst_size(t_list *lst)
+#include "../include/libft.h"
+// return nbr of knot in lst
+int	ft_lstsize(t_list *lst)
 {
-	int	count;
+	int	len;
 
-	count = 0;
-	while (lst != NULL)
+	len = 0;
+	while (lst)
 	{
+		len++;
 		lst = lst->next;
-		count++;
 	}
-	return (count);
+	return (len);
 }

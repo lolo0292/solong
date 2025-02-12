@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:08:18 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:08:19 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/19 16:55:02 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
+#include "../include/libft.h"
+// init var content and next
 t_list	*ft_lstnew(void *content)
 {
-	t_list	*to_return;
+	t_list	*r;
 
-	to_return = NULL;
-	to_return = (t_list *)malloc(sizeof(t_list));
-	if (!to_return)
+	r = malloc(sizeof(t_list));
+	if (!r)
 		return (NULL);
-	to_return->content = content;
-	to_return->next = NULL;
-	return (to_return);
+	r->content = content;
+	r->next = NULL;
+	return (r);
 }

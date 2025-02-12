@@ -3,37 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:09:41 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:09:42 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/12 15:34:36 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/libft.h"
+// size_t	ft_strlen(const char *s)
+// {
+// 	size_t	i;
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+// 	i = 0;
+// 	while (s[i])
+// 		i++;
+// 	return (i);
+// }
+
+//concatenate string
+size_t	ft_strlcat(char *dst, const char *src, size_t siz)
 {
 	size_t	i;
 	size_t	j;
-	size_t	destlen;
+	size_t	dst_len;
+	size_t	src_len;
 
-	i = 0;
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	if (siz <= dst_len)
+		return (siz + src_len);
+	i = dst_len;
 	j = 0;
-	destlen = ft_strnlen(dest, size);
-	while (i < size && dest[i])
-		i++;
-	if (i == size)
-		return (i + ft_strlen(src));
-	while (src[j])
+	while (src[j] && i < siz - 1)
 	{
-		if (j < size - destlen - 1)
-		{
-			dest[i] = src[j];
-			i++;
-		}
+		dst[i] = src[j];
+		i++;
 		j++;
 	}
-	dest[i] = '\0';
-	return (destlen + j);
+	dst[i] = '\0';
+	return (dst_len + src_len);
 }
+
+// int main(int argc, char **argv)
+// {
+// 	(void) argc;
+// 	printf("%zu", ft_strlcat(argv[1], argv[2], atoi(argv[3])));
+// 	return (0);
+// }

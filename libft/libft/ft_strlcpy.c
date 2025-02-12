@@ -3,29 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:09:47 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/26 19:09:48 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/12 13:05:40 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+#include "../include/libft.h"
+// copy str from src to dest with size max
+size_t	ft_strlcpy(char *dst, const char *src, size_t siz)
 {
-	size_t	i;
+	size_t	g;
 
-	i = 0;
-	while (src[i] && i + 1 < size)
+	g = 0;
+	if (siz > 0)
 	{
-		dst[i] = src[i];
-		i++;
-	}
-	if (size > 0)
-	{
-		dst[i] = '\0';
-		i++;
+		while (src[g] && g < (siz - 1))
+		{
+			dst[g] = src[g];
+			g++;
+		}
+		dst[g] = 0;
 	}
 	return (ft_strlen(src));
 }
+
+// size_t	ft_strlen(const char *s)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	while (s[i])
+// 		i++;
+// 	return (i);
+// }
+
+// int main(int argc, char **argv)
+// {
+// 	(void) argc;
+// 	printf("%zu", ft_strlcpy(argv[1], NULL, 10));
+// 	return (0);
+// }

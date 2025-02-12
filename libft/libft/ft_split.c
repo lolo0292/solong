@@ -3,73 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsiefert <nsiefert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 19:09:14 by nsiefert          #+#    #+#             */
-/*   Updated: 2024/12/27 12:25:04 by nsiefert         ###   ########.fr       */
+/*   Created: 2024/11/18 20:08:04 by lleichtn          #+#    #+#             */
+/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-static int	count_words(const char *str, char c)
+#include "../include/libft.h"
+static size_t	ft_countword(char const *s, char c)
 {
-	int	i;
-	int	trigger;
+	size_t	count;
 
-	i = 0;
-	trigger = 0;
-	while (*str)
+	count = 0;
+	while (*s)
 	{
-		if (*str != c && trigger == 0)
-		{
-			trigger = 1;
-			i++;
-		}
-		else if (*str == c)
-			trigger = 0;
-		str++;
+		while (*s == c)
+			s++;
+		if (*s)
+			count++;
+		while (*s != c && *s)
+			s++;
 	}
-	return (i);
+	return (count);
 }
 
-static char	*word_dup(const char *str, int start, int finish)
-{
-	char	*word;
-	int		i;
-
-	i = 0;
-	word = malloc((finish - start + 1) * sizeof(char));
-	while (start < finish)
-		word[i++] = str[start++];
-	word[i] = '\0';
-	return (word);
-}
-
+// split the s
 char	**ft_split(char const *s, char c)
 {
-	size_t	i;
-	size_t	j;
-	int		index;
-	char	**split;
+	char	**lst;
+	size_t	word_len;
+	int		i;
 
-	split = malloc((count_words(s, c) + 1) * sizeof(char *));
-	if (!s || !split)
+	lst = (char **)malloc((ft_countword(s, c) + 1) * sizeof(char *));
+	if (!s || !lst)
 		return (0);
 	i = 0;
-	j = 0;
-	index = -1;
-	while (i <= ft_strlen(s))
+	while (*s)
 	{
-		if (s[i] != c && index < 0)
-			index = i;
-		else if ((s[i] == c || i == ft_strlen(s)) && index >= 0)
+		while (*s == c && *s)
+			s++;
+		if (*s)
 		{
-			split[j++] = word_dup(s, index, i);
-			index = -1;
+			if (!ft_strchr(s, c))
+				word_len = ft_strlen(s);
+			else
+				word_len = ft_strchr(s, c) - s;
+			lst[i++] = ft_substr(s, 0, word_len);
+			s += word_len;
 		}
-		i++;
 	}
-	split[j] = 0;
-	return (split);
+	lst[i] = NULL;
+	return (lst);
 }
+
+// int main(int argc, char **argv)
+// {
+//     char **tmp; 
+//     int i;
+
+//     if (argc != 3) 
+//     {
+//         printf("Usage: %s <string_to_split> <delimiter>\n", argv[0]);
+//         return (1);
+//     }
+
+//     tmp = ft_split(argv[1], argv[2][0]);
+//     if (!tmp)
+//     {
+//         printf("Error: Memory allocation failed.\n");
+//         return (1);
+//     }
+
+//     i = 0;
+//     while (tmp[i])
+//     {
+//         printf("tmp[%d] = '%s'\n", i, tmp[i]);
+//         free(tmp[i]); 
+//         i++;
+//     }
+//     free(tmp); 
+
+//     return (0);
+// }

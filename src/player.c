@@ -6,11 +6,9 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:08:46 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/10 16:19:47 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:48:59 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "so_long.h"
 
 #include "so_long.h"
 
@@ -54,15 +52,15 @@ void	move_player(t_game *game, int dx, int dy)
 // Gère les touches du clavier
 int	handle_keypress(int keycode, t_game *game)
 {
-	if (keycode == 53) // ESC pour quitter proprement
+	if (keycode == 65307) // ESC pour quitter proprement
 		free_game(game);
-	else if (keycode == 13) // W (haut)
+	else if (keycode == 119) // W (haut)
 		move_player(game, 0, -1);
-	else if (keycode == 0) // A (gauche)
+	else if (keycode == 97) // A (gauche)
 		move_player(game, -1, 0);
-	else if (keycode == 1) // S (bas)
+	else if (keycode == 115) // S (bas)
 		move_player(game, 0, 1);
-	else if (keycode == 2) // D (droite)
+	else if (keycode == 100) // D (droite)
 		move_player(game, 1, 0);
 	return (0);
 }
