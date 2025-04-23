@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:21:58 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/12 13:51:30 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:50:38 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,13 @@ int	main(int argc, char **argv)
 	}
 	parse_map(argv[1], &game.map);   // Charge la carte
 	check_map_validity(&game.map);   // Vérifie si la carte est correcte
-
+	if (!is_valid_path(game.map.grid, game.map.player_x, game.map.player_y,
+		game.map.width, game.map.height))
+	{
+	printf("Error\nMap non terminable (chemin impossible)\n");
+	free_map(&game.map);
+	return (1);
+	}
 	game.mlx = mlx_init();           // Initialise MiniLibX
 	if (!game.mlx)
 	{

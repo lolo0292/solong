@@ -120,7 +120,8 @@ SRCS = src/main.c \
        src/map.c \
        src/map_utils.c \
        src/player.c \
-       src/render.c
+       src/render.c \
+	   src/floodfill.c
 
 OBJS = $(SRCS:.c=.o)
 HEADER = push_swap.h

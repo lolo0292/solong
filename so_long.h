@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:01:10 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/12 13:33:36 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:45:04 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	load_textures(t_game *game);
 void	put_image(t_game *game, int x, int y, char tile);
 void	render_map(t_game *game);
 void	display_moves(t_game *game);
+int	is_valid_path(char **map, int x, int y, int w, int h);
 
 
 #endif

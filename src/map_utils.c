@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:04:13 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/10 15:15:43 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:48:45 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	is_map_enclosed(t_map *map)
 		}
 		y++;
 	}
+	if (map->width == map->height)
+		exit(1);
 }
 
 void	count_elements(t_map *map, int *player, int *ex, int *collectibles)
