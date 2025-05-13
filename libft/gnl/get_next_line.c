@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:51:51 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/12 12:44:59 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:18:36 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,6 @@ char	*get_next_line(int fd)
 //     fd = open("test2.txt", O_RDONLY);
 //     if (fd < 0)
 //     {
-//         printf("%s", "une erreur s'est produite dans l'ouverture du fichier");
 //         return (1);
 //     }
 //     str = get_next_line(fd);

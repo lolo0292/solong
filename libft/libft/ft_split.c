@@ -6,11 +6,12 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:08:04 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:18:09 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
+
 static size_t	ft_countword(char const *s, char c)
 {
 	size_t	count;

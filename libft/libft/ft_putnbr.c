@@ -6,11 +6,12 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 11:44:05 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:18:27 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
+
 void	ft_putnbr(int n)
 {
 	if (n >= 10)

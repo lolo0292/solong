@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 11:01:10 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/04/23 15:45:04 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:06:41 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ typedef struct s_game
     int     moves;       // Nombre de déplacements du joueur
 }   t_game;
 
+typedef struct s_dim
+{
+	int	w;
+	int	h;
+}	t_dim;
+
+
 void	free_map(t_map *map);
 void	free_textures(t_game *game);
 void	free_game(t_game *game);
@@ -68,7 +75,9 @@ void	load_textures(t_game *game);
 void	put_image(t_game *game, int x, int y, char tile);
 void	render_map(t_game *game);
 void	display_moves(t_game *game);
-int	is_valid_path(char **map, int x, int y, int w, int h);
-
+int	is_valid_path(char **map, int x, int y, t_dim dim);
+void handle_exit(t_game *game, int x, int y);
+void	check_map_characters(t_map *map);
+int	check_map_name(char *filename);
 
 #endif

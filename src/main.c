@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:21:58 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/04/23 15:50:38 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:07:14 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,48 +19,78 @@ int	close_game(t_game *game)
 	return (0);
 }
 
+// int	main(int argc, char **argv)
+// {
+// 	t_game	game;
+
+// 	if (argc != 2)
+// 		return (1);
+// 	parse_map(argv[1], &game.map);
+// 	check_map_validity(&game.map);
+// 	if (!is_valid_path(game.map.grid, game.map.player_x, game.map.player_y,
+// 			game.map.width, game.map.height))
+// 	{
+// 		free_map(&game.map);
+// 		return (1);
+// 	}
+// 	game.mlx = mlx_init();
+// 	if (!game.mlx)
+// 		return (1);
+// 	game.win = mlx_new_window(game.mlx, game.map.width * 32,
+// 			game.map.height * 32, "So Long");
+// 	if (!game.win)
+// 	{
+// 		free(game.mlx);
+// 		return (1);
+// 	}
+// 	game.moves = 0;
+// 	load_textures(&game);
+// 	render_map(&game);
+// 	mlx_hook(game.win, 2, 1L << 0, handle_keypress, &game);
+// 	mlx_hook(game.win, 17, 0, close_game, &game);
+// 	mlx_loop(game.mlx);
+// 	return (0);
+// }
+
+static int	init_and_run_game(t_game *game)
+{
+	game->mlx = mlx_init();
+	if (!game->mlx)
+		return (1);
+	game->win = mlx_new_window(game->mlx,
+			game->map.width * 32,
+			game->map.height * 32,
+			"So Long");
+	if (!game->win)
+	{
+		free(game->mlx);
+		return (1);
+	}
+	game->moves = 0;
+	load_textures(game);
+	render_map(game);
+	mlx_hook(game->win, 2, 1L << 0, handle_keypress, game);
+	mlx_hook(game->win, 17, 0, close_game, game);
+	mlx_loop(game->mlx);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
+	t_dim	dim;
 
-	if (argc != 2) // Vérifie si un fichier `.ber` est fourni
+	if (argc != 2)
+		return (1);
+	parse_map(argv[1], &game.map);
+	check_map_validity(&game.map);
+	dim.w = game.map.width;
+	dim.h = game.map.height;
+	if (!is_valid_path(game.map.grid, game.map.player_x,
+			game.map.player_y, dim))
 	{
-		printf("Error\nUsage: ./so_long <map.ber>\n");
+		free_map(&game.map);
 		return (1);
 	}
-	parse_map(argv[1], &game.map);   // Charge la carte
-	check_map_validity(&game.map);   // Vérifie si la carte est correcte
-	if (!is_valid_path(game.map.grid, game.map.player_x, game.map.player_y,
-		game.map.width, game.map.height))
-	{
-	printf("Error\nMap non terminable (chemin impossible)\n");
-	free_map(&game.map);
-	return (1);
-	}
-	game.mlx = mlx_init();           // Initialise MiniLibX
-	if (!game.mlx)
-	{
-		printf("Error\nImpossible d'initialiser MiniLibX\n");
-		return (1);
-	}
-	game.win = mlx_new_window(game.mlx, game.map.width * 32,
-			game.map.height * 32, "So Long"); // Crée une fenêtre
-	if (!game.win)
-	{
-		printf("Error\nImpossible de créer la fenêtre\n");
-		free(game.mlx);
-		return (1);
-	}
-	game.moves = 0;                  // Initialise le compteur de déplacements
-
-	load_textures(&game);            // Charge les textures
-	render_map(&game);               // Affiche la carte
-
-	// Ajoute les gestionnaires d'événements
-	// mlx_key_hook(game.win, handle_keypress, &game); // Déplacements clavier
-	mlx_hook(game.win, 2, 1L << 0, handle_keypress, &game);
-	mlx_hook(game.win, 17, 0, close_game, &game);   // Fermeture avec la croix
-
-	mlx_loop(game.mlx);              // Lancement de la boucle MiniLibX
-	return (0);
+	return (init_and_run_game(&game));
 }

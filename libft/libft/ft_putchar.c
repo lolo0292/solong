@@ -6,11 +6,12 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 11:42:12 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:18:02 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
+
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);

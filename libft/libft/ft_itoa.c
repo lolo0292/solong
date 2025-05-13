@@ -6,11 +6,12 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 18:10:01 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/02/11 12:56:07 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:17:52 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
+
 static int	ft_strlena(int nb)
 {
 	int		len;
