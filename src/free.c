@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:18:29 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/05/13 15:59:28 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:22:30 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void	free_game(t_game *game)
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_display(game->mlx);
 	free(game->mlx);
-	printf("Mémoire libérée, fermeture du jeu.\n");
+	// printf("Mémoire libérée, fermeture du jeu.\n");
 	exit(0);
 }
